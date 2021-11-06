@@ -7,8 +7,6 @@
 #SBATCH --mail-type=end # Optional to receive and email at the end of the run
 #SBATCH --mail-user=<eamil> # Email to send the email to.
 
-date
-
 # These two variables 'srun' and 'parallel' are aliases for the command to simplify the parallel command.
 # srun - Run parallel jobs
 # -c - request number of cores per process (use max of cores per node, 28 in the leap cluster, or else you aren't maxing out usage)
