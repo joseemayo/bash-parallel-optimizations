@@ -17,6 +17,9 @@ date
 # sbatch <file-name>
 
 # To check the process of the run:
-# squeue | grep <net-id>
+# squeue | grep <user-id>
+
+# To submit scripts that rely on other scripts:
+# sbatch --dependency=afterok:<job_num_to_wait> <file-name>
 
 date
