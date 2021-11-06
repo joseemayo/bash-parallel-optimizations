@@ -1,0 +1,22 @@
+#!/bin/bash -l
+#SBATCH -J <Job-Name>
+#SBATCH -t <d-hh:mm:ss> # Reservation time
+#SBATCH -p parallel # Partition: Generally Shared or Parallel. Parallel is best to use all the cores in a node.
+#SBATCH -N <int> # n reserves cores, N reserves nodes (which have 28 cores); Scaling your threads proportionally to the # of cores helps efficiency.
+#SBATCH -o <output_file_name>
+#SBATCH --mail-type=end # Optional to receive and email at the end of the run
+#SBATCH --mail-user=<eamil> # Email to send the email to.
+
+date
+
+# Run your script here as you would do command line, or run the commands directly.
+# python ./script_name.py
+# bowtie2 ...
+
+# Once you save this file use the following command to submit the job as a batch:
+# sbatch <file-name>
+
+# To check the process of the run:
+# squeue | grep <net-id>
+
+date
