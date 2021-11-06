@@ -5,5 +5,7 @@ Using GNU Parallel, and referencing the following post:https://bioinformaticswor
 
 I have summarized the scripts, which I use on a daily basis for optimization of my anlaysis in the local Compute Cluster.
 
+* Please note that some of the specifications denoted in this bash submission scripts are specific to the Compute Cluster I am using.
+
 GNU Parallel:
 https://www.gnu.org/software/parallel/
