@@ -1,0 +1,43 @@
+#!/bin/bash -l
+#SBATCH -J <Job-Name>
+#SBATCH -t <d-hh:mm:ss> # Reservation time
+#SBATCH -p parallel # Partition: Generally Shared or Parallel. Parallel is best to use all the cores in a node.
+#SBATCH -N <int> # n reserves cores, N reserves nodes (which have 28 cores); Scaling your threads proportionally to the # of cores helps efficiency.
+#SBATCH -o <output_file_name>
+#SBATCH --mail-type=end # Optional to receive and email at the end of the run
+#SBATCH --mail-user=<eamil> # Email to send the email to.
+
+date
+
+# These two variables 'srun' and 'parallel' are aliases for the command to simplify the parallel command.
+# srun - Run parallel jobs
+# -c - request number of cores per process (use max of cores per node, 28 in the leap cluster, or else you aren't maxing out usage)
+# --exclusive - indicates that each job can only operate on one node, no sharing or overlap.
+# -N - request the number of nodes for each job.
+# -n - specify the number of tasks to run (default one task per node).
+srun="srun --exclusive -N1 -n1 -c 28"
+
+# Parallel is the actual command.
+# --delay - provides time between parallel job initiations, preventing overlap or overload of resources on start up (I believe it is in seconds).
+#  -j - the number of requested jobs to run in parallel (ideally equal to the number of nodes you allocate).
+parallel="parallel --delay .2 -j 9"
+
+date
+
+# To dereference the variables, use the '$' infront of the variable names.
+# The full command looks like: parallel --delay .2 -j 9 "srun --exclusive -N1 -n1 -c 28 <command>" ::: <files>
+# *** We initiate the parallel alignment algrithm using 9 parallel jobs of the same kind until all files in the listed
+# *** directory are processed.
+# *** Each running with one exclusive node with all 28 cores reserved per alignment task.
+# *** Remember, a node contains 28 cores, so ideally we would like to scale the number of threads
+# *** the software package runs with: -p should be a factor of 28, or at least two.
+# *** samtools is the exception, the max number of threads is equal to the number of nodes allocated.
+# For parallel: ':::' followed by a sequence of file names is what the command puts in place of {}
+# In the case of two files: ':::' <file1> ':::+' <file2>; corresponds to '{1}' & '{2}'
+# To get the prefix of a filename use {1/.} or {2/.}
+# Also, in this case, -p can go MUCH higher, but higher doesn't alwasy mean better.
+
+# Any command can be placed here, but for this example I am performing alignment
+$parallel "$srun hisat2 -p <num_threads> --dta -x hisat2_index -U {} -S alignment_output/{1/.}.sam" ::: trimmed_fastq_files/*
+
+date
