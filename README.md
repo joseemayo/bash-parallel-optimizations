@@ -12,5 +12,8 @@ https://www.gnu.org/software/parallel/
 
 Files:
 
-example_parallel_bash_sub_script.sub
+example_serial_bash_sub_script.sub
+- Serial example bash submission script
 
+example_parallel_bash_sub_script.sub
+- Parallel example bash submission script, using GNU Parallel.
