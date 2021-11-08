@@ -9,3 +9,8 @@ I have summarized the scripts, which I use on a daily basis for optimization of 
 
 GNU Parallel:
 https://www.gnu.org/software/parallel/
+
+Files:
+
+example_parallel_bash_sub_script.sub
+
